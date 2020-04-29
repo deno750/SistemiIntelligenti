@@ -64,12 +64,11 @@ class Agent(object):
         frontier = []
         visited = []
         path = {}
-        path[maze] = [] ##initial state
-        #root = maze.location
+        path[maze] = [] ##initial state's path
         frontier.append(maze)
 
         while len(frontier) != 0:
-            node = frontier.pop(0)
+            node = frontier.pop(0) #current node
             visited.append(node)
 
             path[node].append(node.location) #since the current node is visited, we add it to the visited nodes of the current state
@@ -77,21 +76,21 @@ class Agent(object):
             if node == goal:
                 return path[node]
             
-            for move in node.moves():
-                sonMaze = node.neighbor(move)
+            for move in node.moves(): #checks for the sons of the current state
+                sonMaze = node.neighbor(move) #problem of the son
                 
-                parentPath = path[node].copy()
-                path[sonMaze] = parentPath
+                parentPath = path[node].copy() #get the parent's path
+                path[sonMaze] = parentPath #initializing the son's path with parent's path
 
                 if sonMaze not in visited and sonMaze not in frontier:
                     frontier.append(sonMaze)
 
-        return []
+        return [] #no good path was found
 
 
 def main():
     """Create a maze, solve it with BFS, and console-animate."""
-    grid = ["XXXXXXXXXXXXXXXXXXXX",
+    grid = ["X XXXXXXXXXXXXXXXXXX",
             "X     X    X       X",
             "X XXXXX XXXX XXX XXX",
             "X       X      X X X",
@@ -112,7 +111,7 @@ def main():
             "X X                X",
             "XXXXXXXXXXXXXXXXXXXX"]
 
-    maze = Maze(grid, (1, 1))
+    maze = Maze(grid, (0, 1))
     maze.display()
 
     agent = Agent()
